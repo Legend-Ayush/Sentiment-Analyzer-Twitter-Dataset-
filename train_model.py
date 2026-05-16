@@ -13,10 +13,6 @@ from utils.preprocessor import TextPreprocessor
 
 nltk.download('stopwords')
 
-# =========================================
-# LOAD DATASET
-# =========================================
-
 column_names = [
     'target',
     'ids',
@@ -34,17 +30,8 @@ twitter_data = pd.read_csv(
 
 twitter_data.replace({'target': {4: 1}}, inplace=True)
 
-# =========================================
-# FEATURES + LABELS
-# =========================================
-
 X = twitter_data['text'].values
 y = twitter_data['target'].values
-
-# =========================================
-# TRAIN TEST SPLIT
-# =========================================
-
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -53,20 +40,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=2
 )
 
-# =========================================
-# PIPELINE
-# =========================================
-
 pipeline = Pipeline([
-
     (
         'preprocessing',
         TextPreprocessor()
     ),
-
     (
         'tfidf',
-
         TfidfVectorizer(
             max_features=50000,
             ngram_range=(1,3),
@@ -75,10 +55,8 @@ pipeline = Pipeline([
             max_df=0.95
         )
     ),
-
     (
         'model',
-
         LinearSVC(
             C=2,
             max_iter=2000
@@ -86,30 +64,15 @@ pipeline = Pipeline([
     )
 ])
 
-# =========================================
-# TRAIN
-# =========================================
-
 print("Training started...")
-
 pipeline.fit(X_train, y_train)
-
 print("Training completed!")
 
-# =========================================
-# TEST
-# =========================================
-
 pred = pipeline.predict(X_test)
-
 print(
     "Accuracy:",
     accuracy_score(y_test, pred)
 )
-
-# =========================================
-# SAVE MODEL
-# =========================================
 
 pickle.dump(
     pipeline,
