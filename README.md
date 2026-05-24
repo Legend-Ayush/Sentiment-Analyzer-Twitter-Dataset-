@@ -12,9 +12,7 @@ A futuristic AI-powered sentiment analysis web app built using:
 
 - Real-time sentiment analysis
 - Modern glassmorphism UI
-- Confidence meter
 - NLP preprocessing pipeline
-- Interactive animations
 
 ## Run Locally
 
